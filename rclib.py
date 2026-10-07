@@ -103,11 +103,12 @@ class Context:
 
 def main(tool: str, description: str, run: Callable[[Context], int],
          extra_args: Callable[[argparse.ArgumentParser], None] | None = None,
-         needs_target: bool = True) -> int:
+         needs_target: bool = True,
+         target_help: str = "target host, domain, URL, or file") -> int:
     """Standard entrypoint. `run(ctx)` does the work and returns an exit code."""
     p = argparse.ArgumentParser(prog=tool, description=description)
     if needs_target:
-        p.add_argument("target", nargs="?", help="target host, domain, URL, or file")
+        p.add_argument("target", nargs="?", help=target_help)
     else:
         p.add_argument("target", nargs="?", default="", help="optional target")
     p.add_argument("-o", "--output", help="write JSON results to this file")
